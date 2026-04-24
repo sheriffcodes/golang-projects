@@ -1,6 +1,6 @@
-# ASCII Art Generator
+# 💻 ASCII Art Generator
 
-A command-line tool written in Go that transforms standard text strings into ASCII art banners. The program parses a template file and reconstructs characters horizontally to form large-scale graphic representations.
+ASCII Art Generator is a command-line tool written in Go that transforms standard text strings into ASCII art banners. The program parses a template file and reconstructs characters horizontally to form large-scale graphic representations.
 
 ---
 
