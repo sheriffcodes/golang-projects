@@ -60,6 +60,12 @@ func main() {
 	// "Hello World" -> "Hll Wrld"
 	inputq10 := "Hello World"
 	fmt.Println(RemoveVow(inputq10))
+
+	// Q11
+	// Write a function that counts only alphabetic characters in a string
+	// "Hello 123!" -> 5
+	inputq11 := "Hello 1234"
+	fmt.Println(countAlpha(inputq11))
 }
 
 
@@ -139,9 +145,49 @@ func NextThreePos(txt string, pos int) string {
 
 // A10
 func RemoveVow(txt string) string {
+	// result := ""
+
+	// for _, char := range txt {
+	// 	if char != 'e' && char != 'a' && char != 'i' && char != 'o' && char != 'u' {
+	// 		result += string(char)
+	// 	}
+
+		
+	// }
+	// return result
+
+	//ANOTHER METHOD
+	// result := strings.ReplaceAll(txt, "e", "")
+	// result = strings.ReplaceAll(result, "a", "")
+	// result = strings.ReplaceAll(result, "i", "")
+	// result = strings.ReplaceAll(result, "o", "")
+	// result = strings.ReplaceAll(result, "u", "")
+
+	// return result
+
+	//ANOTHER METHOD
 	result := ""
 
 	for _, char := range txt {
-		if char
+		if !strings.ContainsRune("aeiouAEIOU", char) {
+			result += string(char)
+		}
 	}
+	return result
+}
+
+// A11
+func countAlpha(txt string) int {
+	count := 0
+	for _, char := range txt {
+
+		if char >= 'a' && char <= 'z' || char >= 'A' && char <= 'Z' {
+
+		count++
+
+		}
+	}
+
+return count
+
 }
