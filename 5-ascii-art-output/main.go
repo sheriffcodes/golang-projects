@@ -5,14 +5,19 @@ import (
 	"os"
 	"strings"
 )
-
+// THE STORAGE ENGINE (LOADBANNER)
+// loadBanner converts the banner file into a searchable dictionary.
+// It maps each character (rune) to its 8-line ASCII representation.
 func loadBanner(fileName string) map[rune][]string {
+
+	// Read the raw file content
 	content,err := os.ReadFile(fileName)
 	if err != nil {
 		fmt.Printf("Error: banner file '%s' not found\n", fileName)
 		os.Exit(1)
 	}
-
+	 
+	// Split the file into a slice of individual lines
 	rawString := strings.ReplaceAll(string(content), "\r\n", "\n")
 	lines := strings.Split(rawString, "\n")
 
@@ -31,7 +36,31 @@ func loadBanner(fileName string) map[rune][]string {
 }
 
 func Render(input string, bannerMap map[rune][]string) string {
-	
+	var result strings.Builder
+	input = strings.ReplaceAll(input, "\\n", "\n")
+	if input == "" {
+		return ""
+	}
+
+	lines := strings.Split(input, "\n")
+	for _, line := range lines {
+		 if line == "" {
+			result.WriteString("\n")
+			continue
+		 }
+
+		 for row := 0; row < 8; row++ {
+			for _, char := range line {
+				art, ok := bannerMap[char]
+				if !ok {
+					continue
+				}
+				result.WriteString(art[row])
+			}
+			result.WriteString("\n")
+		 }
+	}
+	return result.String()
 }
 
 
@@ -50,7 +79,7 @@ func main() {
 	// This is to check for the argument from the command-line input that has the flag and for extraction of file name
 	for _, arg := range args {
 		if strings.HasPrefix(arg, "--output=") {
-			fileName = arg[len("--output"):]
+			fileName = arg[len("--output="):]
 		} else {
 			remainingArgs = append(remainingArgs, arg)
 		}
@@ -68,7 +97,7 @@ func main() {
 		bannerStyle = remainingArgs[1]
 	}
 
-	bannerFile := bannerStyle + "txt"
+	bannerFile := bannerStyle + ".txt"
 
 	// Initialize the font map and generate the art
 	bannerMap := loadBanner(bannerFile)
@@ -79,12 +108,12 @@ func main() {
 		err := os.WriteFile(fileName, []byte(output), 0644)
 	
 		if err != nil {
-			fmt.Println("Error writing to file: %v\n", err)
+			fmt.Printf("Error writing to file: %v\n", err)
 			return
 
 		}
 
-		fmt.Println("Success: ASCII art written to %s\n", fileName)
+		fmt.Printf("Success: ASCII art written to %s\n", fileName)
 
 	} else {
 		// Default behavior (output to terminal)
