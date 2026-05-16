@@ -40,7 +40,7 @@ func main() {
 		"EUR": 20.2,
 		"GBP": 20.3,
 	}
-	fmt.Println("Length of map = %v", len(currency))
+	fmt.Printf("Length of map = %v", len(currency))
 	// 3
 	fmt.Printf("%#v\n", currency)
 	// The %#v verb is handy when you want to see the type alongside the values.
